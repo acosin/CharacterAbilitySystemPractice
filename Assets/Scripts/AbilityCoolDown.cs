@@ -4,7 +4,6 @@ using UnityEngine.UI;
 
 public class AbilityCoolDown : MonoBehaviour
 {
-
     public string abilityButtonAxisName = "Fire1";
     //public Image darkMask;
     //public Text coolDownTextDisplay;
@@ -17,14 +16,9 @@ public class AbilityCoolDown : MonoBehaviour
     private float nextReadyTime;
     private float coolDownTimeLeft;
 
-
-    void Start()
+    public void Initialize(Ability selectedAbility, string axisName, GameObject weaponHolder)
     {
-        //Initialize(ability, weaponHolder);
-    }
-
-    public void Initialize(Ability selectedAbility, GameObject weaponHolder)
-    {
+        abilityButtonAxisName = axisName;
         ability = selectedAbility;
         //myButtonImage = GetComponent<Image>();
         //abilitySource = GetComponent<AudioSource>();

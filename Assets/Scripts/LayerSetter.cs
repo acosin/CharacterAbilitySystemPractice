@@ -15,4 +15,18 @@ public class LayerSetter {
     {
         go.layer = layer;
     }
+
+    public static string EnemyBaseLayerName(string layerName)
+    {
+        if(layerName == "A" || layerName == "AP")
+        {
+            return "B";
+        }else if (layerName == "B" || layerName == "BP")
+        {
+            return "A";
+        }else
+        {
+            return "Terrain";
+        }
+    }
 }

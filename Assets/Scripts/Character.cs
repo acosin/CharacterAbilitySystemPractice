@@ -11,5 +11,6 @@ public class Character : ScriptableObject
 
     public Ability[] characterAbilities;
     public string[] castAbilityAxisNames;
+    public GameObject model;
 
 }

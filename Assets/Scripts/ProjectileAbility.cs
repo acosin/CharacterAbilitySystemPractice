@@ -12,15 +12,15 @@ public class ProjectileAbility : Ability
 
     public override void Initialize(GameObject obj)
     {
-        launcher = obj.AddComponent<ProjectileShoot>(); //.GetComponent<ProjectileShoot>();
+        launcher = obj.AddComponent<ProjectileShoot>();
+        launcher.projectile = projectile;
+        launcher.projectileForce = projectileForce;
         launcher.Initialize();
     }
 
     public override void TriggerAbility()
     {
-        //launcher.projectileForce = projectileForce;
-        //launcher.projectile = projectile;
-        launcher.Launch(projectile, projectileForce);
+        launcher.Launch();
     }
 
 }

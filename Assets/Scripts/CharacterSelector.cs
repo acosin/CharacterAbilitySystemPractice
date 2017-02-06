@@ -20,17 +20,15 @@ public class CharacterSelector : MonoBehaviour
         //characterSelectPanel.SetActive(false);
         //abilityPanel.SetActive(true);
         GameObject spawnedPlayer = Instantiate(player, playerSpawnPosition, Quaternion.identity) as GameObject;
-        LayerSetter.SetAllLayer(spawnedPlayer, LayerMask.NameToLayer("A"));
         WeaponMarker weaponMarker = spawnedPlayer.GetComponentInChildren<WeaponMarker>();
-        //AbilityCoolDown[] coolDownButtons = spawnedPlayer.GetComponentsInChildren<AbilityCoolDown>();
         Character selectedCharacter = characters[characterChoice];
+        GameObject model = Instantiate(selectedCharacter.model, spawnedPlayer.transform, false) as GameObject;
+        LayerSetter.SetAllLayer(spawnedPlayer, LayerMask.NameToLayer("A"));//team select
         for (int i = 0; i < selectedCharacter.characterAbilities.Length; i++)
         {
             Debug.Log(selectedCharacter.characterAbilities[i]);
-            //Debug.Log(weaponMarker);
             AbilityCoolDown abilityCoolDown = weaponMarker.gameObject.AddComponent<AbilityCoolDown>();
-            abilityCoolDown.abilityButtonAxisName = selectedCharacter.castAbilityAxisNames[i];
-            abilityCoolDown.Initialize(selectedCharacter.characterAbilities[i], weaponMarker.gameObject);
+            abilityCoolDown.Initialize(selectedCharacter.characterAbilities[i], selectedCharacter.castAbilityAxisNames[i], weaponMarker.gameObject);
         }
     }
 }

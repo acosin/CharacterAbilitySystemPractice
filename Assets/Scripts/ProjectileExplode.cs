@@ -10,7 +10,6 @@ public class ProjectileExplode : MonoBehaviour {
     private bool explode;
     public bool bounce;
 
-	// Use this for initialization
 	void Start () {
         if(explodeMaxTime <= 0)
         {
@@ -22,7 +21,6 @@ public class ProjectileExplode : MonoBehaviour {
         
 	}
 	
-	// Update is called once per frame
 	void Update () {
 
     }
@@ -69,26 +67,22 @@ public class ProjectileExplode : MonoBehaviour {
             //        }
             //    }
             //}
-           
-            Collider[] hitColliders = Physics.OverlapSphere(transform.position, blastRadius, ~(1 << gameObject.layer | 1 << LayerMask.NameToLayer(LayerMask.LayerToName(gameObject.layer).Remove(1))));
+            LayerMask lm = (1 << LayerMask.NameToLayer(LayerSetter.EnemyBaseLayerName(LayerMask.LayerToName(gameObject.layer))) | 1 << LayerMask.NameToLayer(LayerSetter.EnemyBaseLayerName(LayerMask.LayerToName(gameObject.layer)) + "P"));
+            Collider[] hitColliders = Physics.OverlapSphere(transform.position, blastRadius, lm);
             for (int i = 0; i < hitColliders.Length; i++)
             {
                 if (hitColliders[i].GetComponent<IAttackable>() != null)
                 {
-                    //Debug.DrawLine(transform.position, hitColliders[i].transform.position, Color.red, 5);
-                    RaycastHit visibleHit;
-                    Physics.Raycast(transform.position, (hitColliders[i].transform.position - transform.position).normalized, out visibleHit, blastRadius);
-                    //Debug.Log(visibleHit.collider.name);
-                    //Debug.Log(hitColliders[i].name);
-                    //Debug.Log(visibleHit.collider == hitColliders[i]);
-                    if (visibleHit.collider == hitColliders[i])
+                    Debug.Log("in range");
+                    //RaycastHit visibleHit;
+                    if(!Physics.Linecast(transform.position, hitColliders[i].transform.position, 1 << LayerMask.NameToLayer("Terrain")))
+                    //Physics.Raycast(transform.position, (hitColliders[i].transform.position - transform.position).normalized, out visibleHit, blastRadius, 1 << LayerMask.NameToLayer("Terrain"));
+                    //if (visibleHit.collider == hitColliders[i])
                     {
                         Debug.Log("damage");
                         hitColliders[i].GetComponent<IAttackable>().GetAttacked(damage);
                         hitColliders[i].GetComponent<IAttackable>().GetExplosionForce(explosionForce, transform.position, blastRadius);
                     }
-                    //hitColliders[i].GetComponent<IAttackable>().GetAttacked(damage);
-                    //hitColliders[i].GetComponent<IAttackable>().GetExplosionForce(explosionForce, transform.position, blastRadius);
                 }
             }
             this.gameObject.SetActive(false);

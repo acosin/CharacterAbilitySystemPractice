@@ -6,12 +6,11 @@ public class RaycastShoot : MonoBehaviour
 
     [HideInInspector]
     public int gunDamage = 1;
-    //[HideInInspector]
-    //public float fireRate = 0.25f;
     [HideInInspector]
     public float weaponRange = 50f;
     [HideInInspector]
     public float hitForce = 100f;
+    [HideInInspector]
     public Transform gunEnd;
 
     public GameObject FPSCharacter;
@@ -20,8 +19,6 @@ public class RaycastShoot : MonoBehaviour
     //private AudioSource gunAudio;
     [HideInInspector]
     public LineRenderer laserLine;
-    //private float nextFire;
-
 
     public void Initialize()
     {
@@ -36,8 +33,6 @@ public class RaycastShoot : MonoBehaviour
 
     public void Fire()
     {
-        //nextFire = Time.time + fireRate;
-
         StartCoroutine(ShotEffect());
 
         Vector3 rayOrigin = fpsCam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0.0f));
@@ -48,7 +43,6 @@ public class RaycastShoot : MonoBehaviour
 
         if (Physics.Raycast(rayOrigin, fpsCam.transform.forward, out hit, weaponRange, ~(1 << gameObject.layer)))
         {
-            //Debug.Log(hit.point);
             laserLine.SetPosition(1, hit.point);
 
             IAttackable health = hit.collider.GetComponent<IAttackable>();
