@@ -29,4 +29,52 @@ public class LayerSetter {
             return "Terrain";
         }
     }
+
+    public static string BaseLayerName(string layerName)
+    {
+        if (layerName == "A" || layerName == "AP")
+        {
+            return "A";
+        }
+        else if (layerName == "B" || layerName == "BP")
+        {
+            return "B";
+        }
+        else
+        {
+            return "Terrain";
+        }
+    }
+
+    public static string EnemyParticleLayerName(string layerName)
+    {
+        if (layerName == "A" || layerName == "AP")
+        {
+            return "BP";
+        }
+        else if (layerName == "B" || layerName == "BP")
+        {
+            return "AP";
+        }
+        else
+        {
+            return "Terrain";
+        }
+    }
+
+    public static string ParticleLayerName(string layerName)
+    {
+        if (layerName == "A" || layerName == "AP")
+        {
+            return "AP";
+        }
+        else if (layerName == "B" || layerName == "BP")
+        {
+            return "BP";
+        }
+        else
+        {
+            return "Terrain";
+        }
+    }
 }

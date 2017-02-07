@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ProjectileExplode : MonoBehaviour {
+public class TracerPulseBombExplode : MonoBehaviour
+{
     public float blastRadius = 1;
     public int damage = 1;
     public float explodeMaxTime = 0;
@@ -10,18 +11,21 @@ public class ProjectileExplode : MonoBehaviour {
     private bool explode;
     public bool bounce;
 
-	void Start () {
-        if(explodeMaxTime <= 0)
+    void Start()
+    {
+        if (explodeMaxTime <= 0)
         {
 
-        }else
-        {
-            Invoke("ExplodeNow", explodeMaxTime);
         }
-        
-	}
-	
-	void Update () {
+        else
+        {
+            GameObject.Destroy(gameObject, 10);
+        }
+
+    }
+
+    void Update()
+    {
 
     }
 
@@ -29,8 +33,13 @@ public class ProjectileExplode : MonoBehaviour {
     {
         if (other.GetComponent<IDamageable>() != null || bounce == false)
         {
-            Debug.Log(other.name);
-            explode = true;
+            GameObject emptySticker = new GameObject("Sticker");
+            gameObject.GetComponent<Rigidbody>().isKinematic = true;
+            gameObject.GetComponent<Collider>().enabled = false;
+            gameObject.transform.SetParent(emptySticker.transform, true);
+            emptySticker.transform.SetParent(other.transform, true);
+            LayerSetter.SetAllLayer(emptySticker, gameObject.layer);
+            Invoke("ExplodeNow", explodeMaxTime);
         }
     }
 
@@ -38,8 +47,14 @@ public class ProjectileExplode : MonoBehaviour {
     {
         if (collision.collider.GetComponent<IDamageable>() != null || bounce == false)
         {
+            GameObject emptySticker = new GameObject("Sticker");
+            gameObject.GetComponent<Rigidbody>().isKinematic = true;
+            gameObject.GetComponent<Collider>().enabled = false;
+            gameObject.transform.SetParent(emptySticker.transform, true);
+            emptySticker.transform.SetParent(collision.collider.transform, true);
+            LayerSetter.SetAllLayer(emptySticker, gameObject.layer);
+            Invoke("ExplodeNow", explodeMaxTime);
             Debug.Log(collision.gameObject.name);
-            explode = true;
         }
     }
 
@@ -75,7 +90,7 @@ public class ProjectileExplode : MonoBehaviour {
                 {
                     Debug.Log("in range");
                     //RaycastHit visibleHit;
-                    if(!Physics.Linecast(transform.position, hitColliders[i].transform.position, 1 << LayerMask.NameToLayer("Terrain")))
+                    if (!Physics.Linecast(transform.position, hitColliders[i].transform.position, 1 << LayerMask.NameToLayer("Terrain")))
                     //Physics.Raycast(transform.position, (hitColliders[i].transform.position - transform.position).normalized, out visibleHit, blastRadius, 1 << LayerMask.NameToLayer("Terrain"));
                     //if (visibleHit.collider == hitColliders[i])
                     {

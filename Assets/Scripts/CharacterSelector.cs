@@ -12,7 +12,7 @@ public class CharacterSelector : MonoBehaviour
 
     void Start()
     {
-        OnCharacterSelect(0);
+        OnCharacterSelect(1);
     }
 
     public void OnCharacterSelect(int characterChoice)

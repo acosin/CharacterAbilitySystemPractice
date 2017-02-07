@@ -41,7 +41,7 @@ public class RaycastShoot : MonoBehaviour, ICastable
 
         laserLine.SetPosition(0, gunEnd.position);
 
-        if (Physics.Raycast(rayOrigin, fpsCam.transform.forward, out hit, weaponRange, ~(1 << gameObject.layer)))
+        if (Physics.Raycast(rayOrigin, fpsCam.transform.forward, out hit, weaponRange, (1 << LayerMask.NameToLayer("Terrain") | 1 << LayerMask.NameToLayer(LayerSetter.EnemyBaseLayerName(LayerMask.LayerToName(gameObject.layer))))))
         {
             laserLine.SetPosition(1, hit.point);
 
