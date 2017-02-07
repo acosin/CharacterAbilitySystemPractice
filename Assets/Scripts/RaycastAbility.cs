@@ -27,7 +27,7 @@ public class RaycastAbility : Ability
 
     public override void TriggerAbility()
     {
-        rcShoot.Fire();
+        rcShoot.Cast();
     }
 
 

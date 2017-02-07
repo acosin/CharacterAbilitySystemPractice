@@ -27,7 +27,7 @@ public class ProjectileExplode : MonoBehaviour {
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.GetComponent<IAttackable>() != null || bounce == false)
+        if (other.GetComponent<IDamageable>() != null || bounce == false)
         {
             Debug.Log(other.name);
             explode = true;
@@ -36,7 +36,7 @@ public class ProjectileExplode : MonoBehaviour {
 
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.collider.GetComponent<IAttackable>() != null || bounce == false)
+        if (collision.collider.GetComponent<IDamageable>() != null || bounce == false)
         {
             Debug.Log(collision.gameObject.name);
             explode = true;
@@ -71,7 +71,7 @@ public class ProjectileExplode : MonoBehaviour {
             Collider[] hitColliders = Physics.OverlapSphere(transform.position, blastRadius, lm);
             for (int i = 0; i < hitColliders.Length; i++)
             {
-                if (hitColliders[i].GetComponent<IAttackable>() != null)
+                if (hitColliders[i].GetComponent<IDamageable>() != null)
                 {
                     Debug.Log("in range");
                     //RaycastHit visibleHit;
@@ -80,8 +80,8 @@ public class ProjectileExplode : MonoBehaviour {
                     //if (visibleHit.collider == hitColliders[i])
                     {
                         Debug.Log("damage");
-                        hitColliders[i].GetComponent<IAttackable>().GetAttacked(damage);
-                        hitColliders[i].GetComponent<IAttackable>().GetExplosionForce(explosionForce, transform.position, blastRadius);
+                        hitColliders[i].GetComponent<IDamageable>().GetAttacked(damage);
+                        hitColliders[i].GetComponent<IDamageable>().GetExplosionForce(explosionForce, transform.position, blastRadius);
                     }
                 }
             }

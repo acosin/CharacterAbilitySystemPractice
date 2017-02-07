@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ProjectileShoot : MonoBehaviour {
+public class ProjectileShoot : MonoBehaviour, ICastable {
     private Camera fpsCam;
     [HideInInspector]
     public Rigidbody projectile;
@@ -16,7 +16,7 @@ public class ProjectileShoot : MonoBehaviour {
         bulletSpawn = GetComponentInChildren<BulletSpawnMarker>().gameObject.transform;
     }
 
-	public void Launch () {
+	public void Cast () {
         Rigidbody cloneRb = Instantiate(projectile, bulletSpawn.position, projectile.gameObject.GetComponent<Transform>().rotation) as Rigidbody;
         cloneRb.transform.forward = fpsCam.transform.forward;
         //Debug.Log(LayerMask.LayerToName(gameObject.layer) + "P");

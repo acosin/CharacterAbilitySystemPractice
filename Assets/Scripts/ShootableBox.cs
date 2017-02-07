@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ShootableBox : MonoBehaviour, IAttackable
+public class ShootableBox : MonoBehaviour, IDamageable
 {
     public int currentHealth = 3;
 

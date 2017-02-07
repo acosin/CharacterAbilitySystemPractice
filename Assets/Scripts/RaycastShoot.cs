@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class RaycastShoot : MonoBehaviour
+public class RaycastShoot : MonoBehaviour, ICastable
 {
 
     [HideInInspector]
@@ -31,7 +31,7 @@ public class RaycastShoot : MonoBehaviour
     }
 
 
-    public void Fire()
+    public void Cast()
     {
         StartCoroutine(ShotEffect());
 
@@ -45,7 +45,7 @@ public class RaycastShoot : MonoBehaviour
         {
             laserLine.SetPosition(1, hit.point);
 
-            IAttackable health = hit.collider.GetComponent<IAttackable>();
+            IDamageable health = hit.collider.GetComponent<IDamageable>();
 
             if (health != null)
             {

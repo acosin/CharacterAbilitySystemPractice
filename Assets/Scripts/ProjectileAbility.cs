@@ -20,7 +20,7 @@ public class ProjectileAbility : Ability
 
     public override void TriggerAbility()
     {
-        launcher.Launch();
+        launcher.Cast();
     }
 
 }
