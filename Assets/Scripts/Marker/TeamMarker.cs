@@ -67,7 +67,7 @@ public class TeamMarker : NetworkBehaviour {
         {
             Debug.Log(selectedCharacter.characterAbilities[i]);
             AbilityCoolDown abilityCoolDown = weaponMarker.gameObject.AddComponent<AbilityCoolDown>();
-            abilityCoolDown.Initialize(selectedCharacter.characterAbilities[i], selectedCharacter.castAbilityAxisNames[i], weaponMarker.gameObject);
+            abilityCoolDown.Initialize(selectedCharacter.characterAbilities[i].CreateByCloning(), selectedCharacter.castAbilityAxisNames[i], weaponMarker.gameObject);
         }
     }
 }

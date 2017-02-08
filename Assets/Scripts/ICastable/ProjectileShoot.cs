@@ -11,7 +11,12 @@ public class ProjectileShoot : MonoBehaviour, ICastable {
     [HideInInspector]
     public float projectileForce = 1000f;
 
-	public void Initialize () {
+    void Start()
+    {
+
+    }
+
+    public void Initialize () {
         fpsCam = gameObject.GetComponentInParent<ParentMarker>().GetComponentInChildren<CameraMarker>().GetComponent<Camera>();
         bulletSpawn = GetComponentInChildren<BulletSpawnMarker>().gameObject.transform;
     }

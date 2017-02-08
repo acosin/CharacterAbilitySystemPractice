@@ -20,6 +20,11 @@ public class RaycastShoot : MonoBehaviour, ICastable
     [HideInInspector]
     public LineRenderer laserLine;
 
+    void Start()
+    {
+
+    }
+
     public void Initialize()
     {
         laserLine = GetComponent<LineRenderer>();

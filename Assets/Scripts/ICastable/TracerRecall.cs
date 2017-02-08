@@ -65,7 +65,6 @@ public class TracerRecall : MonoBehaviour, ICastable
     {
         if(recalling)
         {
-            Debug.Log("recalling");
             gameObject.GetComponentInParent<FirstPersonController>().enabled = false;
             if (positionList.Count > 0)
             {
@@ -109,7 +108,6 @@ public class TracerRecall : MonoBehaviour, ICastable
 
             curTime = 0;
             recalling = false;
-            Debug.Log("recallDone");
         }
         else
         {
@@ -121,11 +119,8 @@ public class TracerRecall : MonoBehaviour, ICastable
                     rotationList.RemoveFirst();
                     camRotationList.RemoveFirst();
                 }
-                ////Debug.Log("recording");
                 positionList.AddLast(gameObject.GetComponentInParent<ParentMarker>().transform.position);
-                Debug.Log(gameObject.GetComponentInParent<ParentMarker>().transform.rotation);
                 rotationList.AddLast(gameObject.GetComponentInParent<ParentMarker>().transform.rotation);
-                Debug.Log(gameObject.GetComponentInParent<ParentMarker>().gameObject.GetComponentInChildren<CameraMarker>().transform.rotation);
                 camRotationList.AddLast(gameObject.GetComponentInParent<ParentMarker>().gameObject.GetComponentInChildren<CameraMarker>().transform.rotation);
 
                 curTime = 0;

@@ -5,6 +5,12 @@ using UnityStandardAssets.Characters.FirstPerson;
 
 public class TracerBlink : MonoBehaviour, ICastable {
     public float distanceForward = 5;
+
+    void Start()
+    {
+
+    }
+
     public void Cast()
     {
         //gameObject.transform.parent.parent.transform.Translate(gameObject.transform.parent.parent.forward * 3);

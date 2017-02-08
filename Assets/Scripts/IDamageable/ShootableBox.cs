@@ -6,10 +6,16 @@ public class ShootableBox : NetworkBehaviour, IDamageable
 {
     [SerializeField] [SyncVar (hook = "OnHealthChanged")] int currentHealth;
     [SerializeField] int maxHealth;
+
     [ServerCallback]
     void OnEnable()
     {
         currentHealth = maxHealth;
+    }
+
+    void Start()
+    {
+
     }
 
     public void GetAttacked(int damageAmount)

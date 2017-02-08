@@ -17,4 +17,9 @@ public class SpecifiedAbility : Ability {
     {
         script.Cast();
     }
+
+    public override Ability CreateByCloning()
+    {
+        return UnityEngine.Object.Instantiate(this) as SpecifiedAbility;
+    }
 }

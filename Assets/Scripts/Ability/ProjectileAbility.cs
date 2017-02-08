@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 [CreateAssetMenu(menuName = "Abilities/ProjectileAbility")]
 public class ProjectileAbility : Ability
@@ -23,4 +24,8 @@ public class ProjectileAbility : Ability
         launcher.Cast();
     }
 
+    public override Ability CreateByCloning()
+    {
+        return UnityEngine.Object.Instantiate(this) as ProjectileAbility;
+    }
 }

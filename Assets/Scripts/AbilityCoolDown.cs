@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.Networking;
 
 public class AbilityCoolDown : MonoBehaviour
 {
@@ -8,12 +9,17 @@ public class AbilityCoolDown : MonoBehaviour
     //public Text coolDownTextDisplay;
 
     private Ability ability;
-    private GameObject weaponHolder;
+    //[SerializeField] private GameObject weaponHolder;
     //private Image myButtonImage;
     //private AudioSource abilitySource;
     private float coolDownDuration;
     private float nextReadyTime;
     private float coolDownTimeLeft;
+
+    void Start()
+    {
+
+    }
 
     public void Initialize(Ability selectedAbility, string axisName, GameObject weaponHolder)
     {
@@ -35,9 +41,12 @@ public class AbilityCoolDown : MonoBehaviour
         if (coolDownComplete)
         {
             AbilityReady();
-            if (Input.GetButtonDown(abilityButtonAxisName))
+            if(Input.GetButtonDown(abilityButtonAxisName))
             {
-                ButtonTriggered();
+                if (gameObject.GetComponentInParent<ParentMarker>().GetComponent<NetworkIdentity>().isLocalPlayer)
+                {
+                    ButtonTriggered();
+                }
             }
         }
         else

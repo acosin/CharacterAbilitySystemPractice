@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 [CreateAssetMenu(menuName = "Abilities/RaycastAbility")]
 public class RaycastAbility : Ability
@@ -30,5 +31,8 @@ public class RaycastAbility : Ability
         rcShoot.Cast();
     }
 
-
+    public override Ability CreateByCloning()
+    {
+        return UnityEngine.Object.Instantiate(this) as RaycastAbility;
+    }
 }
