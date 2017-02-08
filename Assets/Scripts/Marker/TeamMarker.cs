@@ -22,6 +22,14 @@ public class TeamMarker : NetworkBehaviour {
         }
     }
 
+    void Update()
+    {
+        if(Input.GetKeyDown("p"))
+        {
+            SetLocalPlayerItems(false);
+        }
+    }
+
     void SetLocalPlayerItems(bool enabled)
     {
         gameObject.GetComponent<CharacterController>().enabled = enabled;
