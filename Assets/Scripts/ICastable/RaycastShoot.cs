@@ -13,7 +13,7 @@ public class RaycastShoot : MonoBehaviour, ICastable
     [HideInInspector]
     public Transform gunEnd;
 
-    public GameObject FPSCharacter;
+    //public GameObject FPSCharacter;
     private Camera fpsCam;
     private WaitForSeconds shotDuration = new WaitForSeconds(0.07f);
     //private AudioSource gunAudio;
@@ -26,7 +26,7 @@ public class RaycastShoot : MonoBehaviour, ICastable
 
         //gunAudio = GetComponent<AudioSource>();
 
-        fpsCam = GetComponentInParent<Camera>();
+        fpsCam = gameObject.GetComponentInParent<ParentMarker>().GetComponentInChildren<CameraMarker>().GetComponent<Camera>();
         gunEnd = GetComponentInChildren<GunEndMarker>().gameObject.transform;
     }
 

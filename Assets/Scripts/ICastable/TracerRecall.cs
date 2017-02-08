@@ -38,13 +38,13 @@ public class TracerRecall : MonoBehaviour, ICastable
         curTime = 0;
 
         positionList.Clear();
-        positionList.AddLast(gameObject.transform.parent.parent.position);
+        positionList.AddLast(gameObject.GetComponentInParent<ParentMarker>().transform.position);
 
         rotationList.Clear();
-        rotationList.AddLast(gameObject.GetComponentInParent<FirstPersonController>().gameObject.transform.rotation);
+        rotationList.AddLast(gameObject.GetComponentInParent<ParentMarker>().transform.rotation);
 
         camRotationList.Clear();
-        camRotationList.AddLast(gameObject.GetComponentInParent<Camera>().transform.rotation);
+        camRotationList.AddLast(gameObject.GetComponentInParent<ParentMarker>().gameObject.GetComponentInChildren<CameraMarker>().transform.rotation);
 
         trimmingCount = 1;
 
@@ -65,6 +65,7 @@ public class TracerRecall : MonoBehaviour, ICastable
     {
         if(recalling)
         {
+            Debug.Log("recalling");
             gameObject.GetComponentInParent<FirstPersonController>().enabled = false;
             if (positionList.Count > 0)
             {
@@ -76,37 +77,39 @@ public class TracerRecall : MonoBehaviour, ICastable
                 if(curingTime <= 0)
                 {
                     turnToPos = positionList.Last.Value;
-                    turnToRotation = rotationList.Last.Value;
-                    turnToCamRotation = camRotationList.Last.Value;
+                    turnToRotation = rotationList.First.Value;//Last.Value for curingTime
+                    turnToCamRotation = camRotationList.First.Value;//Last.Value for curingTime
                     positionList.RemoveLast();
                     rotationList.RemoveLast();
                     camRotationList.RemoveLast();
                 }
 
-                gameObject.transform.parent.parent.position = Vector3.MoveTowards(gameObject.transform.parent.parent.position, turnToPos, Vector3.Distance(gameObject.transform.parent.parent.position, turnToPos) / (((recallingLength / (float)trimmingCount) - curingTime) / Time.deltaTime));
+                gameObject.GetComponentInParent<ParentMarker>().transform.position = Vector3.MoveTowards(gameObject.GetComponentInParent<ParentMarker>().transform.position, turnToPos, Vector3.Distance(gameObject.GetComponentInParent<ParentMarker>().transform.position, turnToPos) / (((recallingLength / (float)trimmingCount) - curingTime) / Time.deltaTime));
 
-                gameObject.GetComponentInParent<Camera>().transform.rotation = Quaternion.Slerp(gameObject.GetComponentInParent<Camera>().transform.rotation, turnToCamRotation, (Time.deltaTime / ((recallingLength / (float)trimmingCount) - accCuringTime/*curingTime*/)));
-                gameObject.GetComponentInParent<FirstPersonController>().transform.rotation = Quaternion.Slerp(gameObject.GetComponentInParent<FirstPersonController>().transform.rotation, turnToRotation, (Time.deltaTime / ((recallingLength / (float)trimmingCount) - accCuringTime/*curingTime*/)));
+                gameObject.GetComponentInParent<ParentMarker>().transform.rotation = Quaternion.Slerp(gameObject.GetComponentInParent<ParentMarker>().transform.rotation, turnToRotation, (Time.deltaTime / ((recallingLength / (float)trimmingCount) - accCuringTime/*curingTime*/)));
 
+                gameObject.GetComponentInParent<ParentMarker>().gameObject.GetComponentInChildren<CameraMarker>().transform.rotation = Quaternion.Slerp(gameObject.GetComponentInParent<ParentMarker>().gameObject.GetComponentInChildren<CameraMarker>().transform.rotation, turnToCamRotation, (Time.deltaTime / ((recallingLength / (float)trimmingCount) - accCuringTime/*curingTime*/)));
+                
                 curingTime += Time.deltaTime;
                 accCuringTime += Time.deltaTime;
 
                 return;
             }
-            gameObject.GetComponentInParent<FirstPersonController>().m_MouseLook.Init(gameObject.GetComponentInParent<FirstPersonController>().transform, gameObject.GetComponentInParent<Camera>().transform);
-            gameObject.GetComponentInParent<FirstPersonController>().enabled = true;
+            gameObject.GetComponentInParent<ParentMarker>().GetComponent<FirstPersonController>().m_MouseLook.Init(gameObject.GetComponentInParent<ParentMarker>().transform, gameObject.GetComponentInParent<ParentMarker>().gameObject.GetComponentInChildren<CameraMarker>().transform);
+            gameObject.GetComponentInParent<ParentMarker>().GetComponent<FirstPersonController>().enabled = true;
 
             positionList.Clear();
-            positionList.AddLast(gameObject.transform.parent.parent.position);
+            positionList.AddLast(gameObject.GetComponentInParent<ParentMarker>().transform.position);
 
             rotationList.Clear();
-            rotationList.AddLast(gameObject.GetComponentInParent<FirstPersonController>().gameObject.transform.rotation);
+            rotationList.AddLast(gameObject.GetComponentInParent<ParentMarker>().transform.rotation);
 
             camRotationList.Clear();
-            camRotationList.AddLast(gameObject.GetComponentInParent<Camera>().transform.rotation);
+            camRotationList.AddLast(gameObject.GetComponentInParent<ParentMarker>().gameObject.GetComponentInChildren<CameraMarker>().transform.rotation);
 
             curTime = 0;
             recalling = false;
+            Debug.Log("recallDone");
         }
         else
         {
@@ -119,16 +122,16 @@ public class TracerRecall : MonoBehaviour, ICastable
                     camRotationList.RemoveFirst();
                 }
                 ////Debug.Log("recording");
-                positionList.AddLast(gameObject.transform.parent.parent.position);
-                rotationList.AddLast(gameObject.GetComponentInParent<FirstPersonController>().gameObject.transform.rotation);
-                camRotationList.AddLast(gameObject.GetComponentInParent<Camera>().transform.rotation);
+                positionList.AddLast(gameObject.GetComponentInParent<ParentMarker>().transform.position);
+                Debug.Log(gameObject.GetComponentInParent<ParentMarker>().transform.rotation);
+                rotationList.AddLast(gameObject.GetComponentInParent<ParentMarker>().transform.rotation);
+                Debug.Log(gameObject.GetComponentInParent<ParentMarker>().gameObject.GetComponentInChildren<CameraMarker>().transform.rotation);
+                camRotationList.AddLast(gameObject.GetComponentInParent<ParentMarker>().gameObject.GetComponentInChildren<CameraMarker>().transform.rotation);
 
                 curTime = 0;
             }
             curTime += Time.deltaTime;
         }
-        //float step = speed * Time.deltaTime;
-        //gameObject.transform.localPosition = Vector3.MoveTowards(gameObject.transform.localPosition, new Vector3(10, -3, 50), step);
     }
 
     public void Cast()

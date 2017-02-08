@@ -1,18 +1,25 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.Networking;
 
-public class ShootableBox : MonoBehaviour, IDamageable
+public class ShootableBox : NetworkBehaviour, IDamageable
 {
-    public int currentHealth = 3;
+    [SerializeField] [SyncVar (hook = "OnHealthChanged")] int currentHealth;
+    [SerializeField] int maxHealth;
+    [ServerCallback]
+    void OnEnable()
+    {
+        currentHealth = maxHealth;
+    }
 
     public void GetAttacked(int damageAmount)
     {
         currentHealth -= damageAmount;
 
-        if (currentHealth <= 0)
-        {
-            gameObject.SetActive(false);
-        }
+        //if (currentHealth <= 0)
+        //{
+        //    gameObject.SetActive(false);
+        //}
     }
 
     public void GetForce(Vector3 hitPoint, Vector3 force)
@@ -29,5 +36,20 @@ public class ShootableBox : MonoBehaviour, IDamageable
         {
             gameObject.GetComponent<Rigidbody>().AddExplosionForce(explosionForce, explosionPosition, explosionRadius);
         }
+    }
+
+    public void OnHealthChanged(int value)
+    {
+        currentHealth = value;
+        if(value <= 0)
+        {
+            gameObject.SetActive(false);
+            Die();
+        }
+    }
+
+    void Die()
+    {
+        gameObject.SetActive(false);
     }
 }

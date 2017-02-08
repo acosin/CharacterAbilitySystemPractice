@@ -12,7 +12,7 @@ public class ProjectileShoot : MonoBehaviour, ICastable {
     public float projectileForce = 1000f;
 
 	public void Initialize () {
-        fpsCam = GetComponentInParent<Camera>();
+        fpsCam = gameObject.GetComponentInParent<ParentMarker>().GetComponentInChildren<CameraMarker>().GetComponent<Camera>();
         bulletSpawn = GetComponentInChildren<BulletSpawnMarker>().gameObject.transform;
     }
 
